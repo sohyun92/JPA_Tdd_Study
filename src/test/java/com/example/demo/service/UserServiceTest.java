@@ -1,11 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.exception.CertificationCodeNotMatchedException;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.UserStatus;
-import com.example.demo.model.dto.UserCreateDto;
-import com.example.demo.model.dto.UserUpdateDto;
-import com.example.demo.repository.UserEntity;
+import com.example.demo.common.domain.exception.CertificationCodeNotMatchedException;
+import com.example.demo.common.domain.exception.ResourceNotFoundException;
+import com.example.demo.user.domain.UserStatus;
+import com.example.demo.user.domain.dto.UserCreate;
+import com.example.demo.user.domain.dto.UserUpdate;
+import com.example.demo.user.infrastructure.UserEntity;
+import com.example.demo.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,7 @@ public class UserServiceTest {
     @Test
     void userCreateDTO_를_이용하여_유저_생성_할수있다(){
 
-        UserCreateDto userCreateDto= UserCreateDto.builder()
+        UserCreate userCreateDto= UserCreate.builder()
                 .email("0830thgus@naver.com")
                 .address("addr")
                 .nickname("so")
@@ -91,7 +92,7 @@ public class UserServiceTest {
     @Test
     void userUpdateDTO_를_이용하여_유저_수정_할수있다(){
 
-        UserUpdateDto userUpdateDto= UserUpdateDto.builder()
+        UserUpdate userUpdateDto= UserUpdate.builder()
                 .address("seoul")
                 .nickname("so12")
                 .build();
