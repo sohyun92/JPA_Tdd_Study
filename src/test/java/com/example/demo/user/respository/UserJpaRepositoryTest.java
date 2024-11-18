@@ -2,7 +2,7 @@ package com.example.demo.user.respository;
 
 import com.example.demo.user.domain.UserStatus;
 import com.example.demo.user.infrastructure.UserEntity;
-import com.example.demo.user.infrastructure.UserRepository;
+import com.example.demo.user.infrastructure.UserJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +19,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest(showSql = true)
 @TestPropertySource("classpath:test-application.properties")
 @Sql("/sql/user-repository-test-data.sql")
-public class UserRepositoryTest {
+public class UserJpaRepositoryTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserJpaRepository userJpaRepository;
 
     @Test
     void findByEmailAndStatus로_유저데이터를_찾아올수있다(){
         //given
 
-        Optional<UserEntity> result = userRepository.findByEmailAndStatus("0830thgus@naver.com", UserStatus.ACTIVE);
+        Optional<UserEntity> result = userJpaRepository.findByEmailAndStatus("0830thgus@naver.com", UserStatus.ACTIVE);
         //then
         assertThat(result.isPresent()).isTrue();
     }
@@ -37,7 +37,7 @@ public class UserRepositoryTest {
     void findByEmailAndStatus로_데이터가없으면_Optional_empty를_내려준다(){
         //given
 
-        Optional<UserEntity> result = userRepository.findByEmailAndStatus("0830thgus@naver.com", UserStatus.PENDING);
+        Optional<UserEntity> result = userJpaRepository.findByEmailAndStatus("0830thgus@naver.com", UserStatus.PENDING);
         //then
         assertThat(result.isEmpty()).isTrue();
     }
