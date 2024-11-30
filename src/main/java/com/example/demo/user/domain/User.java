@@ -1,6 +1,8 @@
 package com.example.demo.user.domain;
 
 import com.example.demo.common.domain.exception.CertificationCodeNotMatchedException;
+import com.example.demo.common.service.port.ClockHolder;
+import com.example.demo.common.service.port.UuidHolder;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,17 +34,17 @@ public class User {
         this.lastLoginAt = lastLoginAt;
     }
 
-    public static User from(com.example.demo.user.domain.dto.UserCreate userCreate){
+    public static User from(com.example.demo.user.domain.UserCreate userCreate, UuidHolder uuidHolder){
         return User.builder()
                 .email(userCreate.getEmail())
                 .nickname(userCreate.getNickname())
                 .address(userCreate.getAddress())
                 .status(UserStatus.PENDING)
-                .certificationCode(UUID.randomUUID().toString())
+                .certificationCode(uuidHolder.random())
                 .build();
     }
 
-    public User update(com.example.demo.user.domain.dto.UserUpdate userUpdate) {
+    public User update(com.example.demo.user.domain.UserUpdate userUpdate) {
         return User.builder()
                 .id(id)
                 .email(email)
@@ -53,14 +55,14 @@ public class User {
                 .build();
     }
 
-    public User login(){
+    public User login(ClockHolder clockHolder){
         return User.builder()
                 .id(id)
                 .email(email)
                 .nickname(nickname)
                 .address(address)
                 .status(status)
-                .lastLoginAt(Clock.systemUTC().millis())
+                .lastLoginAt(clockHolder.millis())
                 .build();
     }
 
